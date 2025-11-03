@@ -12,10 +12,11 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     build-essential \
+    nvidia-utils-535 \
     && rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリの設定
-WORKDIR /work/deep-opt-auctions
+WORKDIR /workspaces/deep-opt-auctions
 
 # CUDAが利用可能かチェックするためのスクリプト
 RUN echo '#!/bin/bash\n\

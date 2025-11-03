@@ -2,8 +2,12 @@
 	"name": "Deep Opt Auctions GPU Development",
 	"dockerFile": "Dockerfile",
 	"runArgs": [
-		"--shm-size=8gb"
+		"--shm-size=8gb",
+		"--gpus=all"
 	],
+	"features": {
+		"ghcr.io/devcontainers/features/nvidia-cuda:1": {}
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
