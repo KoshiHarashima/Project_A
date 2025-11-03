@@ -1,0 +1,15 @@
+# PyTorch (matching Dockerfile pytorch:2.1.0-cuda12.1)
+torch>=2.1.0
+# CUDA support (optional, will use CPU if not available)
+# For CUDA 12.1: torch>=2.1.0+cu121 (install from PyTorch website)
+
+# Core dependencies
+numpy>=1.21.0
+matplotlib>=3.5.0
+easydict>=1.9
+
+# Optional: for development/linting (not required for runtime)
+# flake8>=4.0.0
+# isort>=5.10.0
+# black>=22.0.0
+
