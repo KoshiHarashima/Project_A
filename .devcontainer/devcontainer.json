@@ -5,9 +5,6 @@
 		"--shm-size=8gb",
 		"--gpus=all"
 	],
-	"features": {
-		"ghcr.io/devcontainers/features/nvidia-cuda:1": {}
-	},
 	"customizations": {
 		"vscode": {
 			"extensions": [

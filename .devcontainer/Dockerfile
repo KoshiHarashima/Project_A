@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     build-essential \
-    nvidia-utils-535 \
     && rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリの設定
