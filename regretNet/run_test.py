@@ -113,20 +113,6 @@ elif setting == "unit_2x2_uniform":
     clip_op_lambda = (lambda x: clip_op_01(x))
     Trainer = trainer.Trainer
 
-elif setting == "additive_1x2_beta_11":
-    cfg = additive_1x2_beta_11_config.cfg
-    Net = additive_net.Net
-    Generator = beta_11_generator.Generator
-    clip_op_lambda = (lambda x: clip_op_01(x))
-    Trainer = trainer.Trainer
-
-elif setting == "additive_1x2_gamma_11":
-    cfg = additive_1x2_gamma_11_config.cfg
-    Net = additive_net.Net
-    Generator = gamma_11_generator.Generator
-    clip_op_lambda = (lambda x: clip_op_gamma_01(x))
-    Trainer = trainer.Trainer
-
 else:
     print("None selected")
     sys.exit(0)

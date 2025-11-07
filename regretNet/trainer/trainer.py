@@ -445,28 +445,28 @@ class Trainer(object):
             pay_tst = np.zeros(self.test_gen.X.shape[:-1])
 
         self.net.eval()
-        with torch.no_grad():
-            for i in range(self.config.test.num_batches):
-                tic = time.time()
-                X, ADV, perm = next(self.test_gen.gen_func)
-                X_tensor = torch.tensor(X, dtype=torch.float32)
-                ADV_tensor = torch.tensor(ADV, dtype=torch.float32)
-                self.adv_var.data = ADV_tensor
-                test_mis_opt = optim.Adam([self.adv_var], lr=self.config.test.gd_lr)
-                for k in range(self.config.test.gd_iter):
-                    test_mis_opt.zero_grad()
-                    x_mis, misreports = self.get_misreports(X_tensor, self.adv_var, 
-                        [self.config.num_agents, self.config[self.mode].num_misreports, self.config[self.mode].batch_size, self.config.num_agents, self.config.num_items])
-                    a_mis, p_mis = self.net.inference(misreports)
-                    utility_mis = self.compute_utility(x_mis, a_mis, p_mis)
-                    u_shape = [self.config.num_agents, self.config[self.mode].num_misreports, self.config[self.mode].batch_size, self.config.num_agents]
-                    u_mis = (utility_mis.view(u_shape) * self.u_mask_tensor)
-                    loss = -torch.sum(u_mis)
-                    loss.backward()
-                    test_mis_opt.step()
-                    self.clip_op_lambda(self.adv_var)
+        for i in range(self.config.test.num_batches):
+            tic = time.time()
+            X, ADV, perm = next(self.test_gen.gen_func)
+            X_tensor = torch.tensor(X, dtype=torch.float32)
+            ADV_tensor = torch.tensor(ADV, dtype=torch.float32)
+            self.adv_var.data = ADV_tensor
+            test_mis_opt = optim.Adam([self.adv_var], lr=self.config.test.gd_lr)
+            for k in range(self.config.test.gd_iter):
+                test_mis_opt.zero_grad()
+                x_mis, misreports = self.get_misreports(X_tensor, self.adv_var, 
+                    [self.config.num_agents, self.config[self.mode].num_misreports, self.config[self.mode].batch_size, self.config.num_agents, self.config.num_items])
+                a_mis, p_mis = self.net.inference(misreports)
+                utility_mis = self.compute_utility(x_mis, a_mis, p_mis)
+                u_shape = [self.config.num_agents, self.config[self.mode].num_misreports, self.config[self.mode].batch_size, self.config.num_agents]
+                u_mis = (utility_mis.view(u_shape) * self.u_mask_tensor)
+                loss = -torch.sum(u_mis)
+                loss.backward()
+                test_mis_opt.step()
+                self.clip_op_lambda(self.adv_var)
 
-                # Get mechanism for true valuation
+            # Get mechanism for true valuation
+            with torch.no_grad():
                 alloc, pay = self.net.inference(X_tensor)
                 
                 # Get misreports
@@ -508,9 +508,9 @@ class Trainer(object):
                 toc = time.time()
                 time_elapsed += (toc - tic)
 
-                fmt_vals = tuple([item for tup in zip(self.metric_names, metrics) for item in tup])
-                log_str = "TEST BATCH-%d: t = %.4f" % (i, time_elapsed) + ", %s: %.6f" * len(self.metric_names) % fmt_vals
-                self.logger.info(log_str)
+            fmt_vals = tuple([item for tup in zip(self.metric_names, metrics) for item in tup])
+            log_str = "TEST BATCH-%d: t = %.4f" % (i, time_elapsed) + ", %s: %.6f" * len(self.metric_names) % fmt_vals
+            self.logger.info(log_str)
         
         metric_tot = metric_tot / self.config.test.num_batches
         fmt_vals = tuple([item for tup in zip(self.metric_names, metric_tot) for item in tup])
