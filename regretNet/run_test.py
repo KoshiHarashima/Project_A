@@ -4,7 +4,11 @@ from __future__ import print_function
 
 import sys
 import numpy as np
+import os
 
+# CPU最適化のための環境変数設定（8コア環境）
+os.environ.setdefault('OMP_NUM_THREADS', '8')  # OpenMP用（PyTorchなど）
+os.environ.setdefault('VECLIB_MAXIMUM_THREADS', '8')  # Apple Accelerate用（NumPy）
 
 from nets import *
 from cfgs import *
