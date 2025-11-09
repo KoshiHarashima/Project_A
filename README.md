@@ -3,12 +3,25 @@ Implementation of "Optimal Auctions through Deep Learning" (https://arxiv.org/pd
 
 ## Getting Started
 
-Install the following packages:
-- Python 3.8+ 
-- PyTorch (>=2.1.0)
+### Prerequisites
+- Python 3.8+ (tested with Python 3.12.8)
+- PyTorch (>=2.1.0, tested with PyTorch 2.9.0)
 - Numpy and Matplotlib packages
 - Easydict - `pip install easydict`
 
+### Installation
+
+#### Using Virtual Environment
+```bash
+# Create and activate virtual environment
+source venv/bin/activate  # or: python -m venv venv
+
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+#### Direct Installation
 Or install from requirements.txt:
 ```bash
 pip install -r requirements.txt
@@ -22,7 +35,7 @@ pip install -r requirements.txt
 Default hyperparameters are specified in regretNet/cfgs/.  
 
 #### For Sample-Based approach:
-Modify the following hyperparameters in the config file specified in regretNet/cfg/.
+Modify the following hyperparameters in the config file specified in regretNet/cfgs/.
 ```
 cfg.train.gd_iter = 0
 cfg.train.num_misreports = 100
@@ -30,11 +43,24 @@ cfg.val.num_misreports = 100 # Number of val-misreports is always equal to the n
 ```
 
 For training the network, testing the mechanism learnt and computing the baselines, run:
-```
+```bash
 cd regretNet
 python run_train.py [setting_name]
 python run_test.py [setting_name]
 python run_baseline.py [setting_name]
+```
+
+#### Resuming Training from Checkpoint
+To resume training from a saved checkpoint, modify `restore_iter` in the config file:
+```python
+__C.train.restore_iter = 180000  # Resume from iteration 180000
+```
+Then run training as usual. Note: This requires `save_data = True` in the config file to load training data files (`X.npy` and `ADV_*.npy`).
+
+#### Data Saving for Restore
+Set `save_data = True` in the config file to save training data, enabling checkpoint resumption:
+```python
+__C.save_data = True  # Saves X.npy and ADV_*.npy files
 ```
 
 setting\_no  |      setting\_name |
@@ -63,7 +89,7 @@ setting\_no  |      setting\_name |
 
 Default hyperparameters are specified in rochetNet/cfgs/.  
 For training the network, testing the mechanism learnt and computing the baselines, run:
-```
+```bash
 cd rochetNet
 python run_train.py [setting_name]
 python run_test.py [setting_name]
@@ -143,7 +169,6 @@ setting\_no  |      setting\_name |
   - 上界制約: 財3の配分確率 ≤ min(財1の配分確率, 財2の配分確率)
   この設定では、RegretNetに加えて配分確率の制約違反に対する罰則項が追加される。既存のregret罰則項と同様に、Lagrange乗数法を用いて制約違反を最小化する。実装は既存クラスを変更せず、新規クラス（`constrained_additive_net.py`、`constrained_trainer.py`など）として追加されている。
 
-絆創膏
 ## Visualization
 
 Allocation Probabilty plots for **unit\_1x2\_uniform_23** setting learnt by **regretNet**:

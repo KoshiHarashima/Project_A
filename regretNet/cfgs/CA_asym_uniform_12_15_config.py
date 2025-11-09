@@ -21,7 +21,7 @@ __C.distribution_type = "CA_asym_uniform_12_15"
 __C.agent_type = "additive"
 
 # Save data for restore.
-__C.save_data = False
+__C.save_data = True
 
 # Neural Net parameters
 __C.net = edict()    

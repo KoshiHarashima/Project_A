@@ -22,7 +22,7 @@ __C.agent_type = "additive"
 __C.c = 1.0  # 財3の上限パラメータ
 
 # Save data for restore.
-__C.save_data = False
+__C.save_data = True
 
 # Neural Net parameters
 __C.net = edict()    

@@ -21,7 +21,7 @@ __C.distribution_type = "beta_11"
 __C.agent_type = "additive"
 
 # Save data for restore.
-__C.save_data = False
+__C.save_data = True
 
 # Neural Net parameters
 __C.net = edict()    
