@@ -12,7 +12,7 @@ class Net(AdditiveNet):
     AdditiveNetを継承し、配分確率の制約違反計算機能を追加
     
     財3の配分確率に対する制約:
-    - 下界: max(0, alloc1 + alloc2) <= alloc3
+    - 下界: max(0, alloc1 + alloc2 - 1) <= alloc3
     - 上界: alloc3 <= min(alloc1, alloc2)
     """
     
@@ -37,8 +37,8 @@ class Net(AdditiveNet):
         alloc2 = alloc[:, :, 1]  # 財2の配分確率
         alloc3 = alloc[:, :, 2]  # 財3の配分確率
         
-        # 下界: max(0, alloc1 + alloc2)
-        lower_bound = torch.clamp(alloc1 + alloc2, min=0.0)
+        # 下界: max(0, alloc1 + alloc2 - 1)
+        lower_bound = torch.clamp(alloc1 + alloc2 - 1, min=0.0)
         # 上界: min(alloc1, alloc2)
         upper_bound = torch.minimum(alloc1, alloc2)
         

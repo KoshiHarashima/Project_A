@@ -19,7 +19,7 @@ class Trainer(BaseTrainer):
     BaseTrainerを継承し、配分確率制約違反の罰則項を追加
     
     財3の配分確率に対する制約:
-    - 下界: max(0, alloc1 + alloc2) <= alloc3
+    - 下界: max(0, alloc1 + alloc2 - 1) <= alloc3
     - 上界: alloc3 <= min(alloc1, alloc2)
     """
     
@@ -164,7 +164,8 @@ class Trainer(BaseTrainer):
             self.opt_2 = optim.Adam([self.adv_var], lr=self.config.train.gd_lr)
             
             if self.config.train.data == "fixed" and self.config.train.adv_reuse:
-                self.train_gen.update_adv(perm, self.adv_var.detach().cpu().numpy())
+                # CPU only: .cpu() is unnecessary but harmless (no-op)
+                self.train_gen.update_adv(perm, self.adv_var.detach().numpy())
             
             # Update network params
             self.opt_1.zero_grad()

@@ -32,11 +32,17 @@ class Trainer(object):
         # Set Seeds for reproducibility
         np.random.seed(self.config[self.mode].seed)
         torch.manual_seed(self.config[self.mode].seed)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(self.config[self.mode].seed)
         
-        # Set device
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        # Set device to CPU (optimized for CPU-only execution)
+        self.device = torch.device('cpu')
+        
+        # Set CPU thread count for optimal performance
+        # Use environment variables OMP_NUM_THREADS and MKL_NUM_THREADS if set,
+        # otherwise use default (PyTorch will use all available cores)
+        if 'OMP_NUM_THREADS' not in os.environ and 'MKL_NUM_THREADS' not in os.environ:
+            # Set reasonable default if not specified
+            cpu_count = os.cpu_count() or 4
+            torch.set_num_threads(min(cpu_count, 8))  # Cap at 8 to avoid overhead
         
         # Init Logger
         self.init_logger()
@@ -244,7 +250,8 @@ class Trainer(object):
                     param_group['lr'] = self.update_rate.item()
 
             if self.config.train.data == "fixed" and self.config.train.adv_reuse:
-                self.train_gen.update_adv(perm, self.adv_var.detach().cpu().numpy())
+                # CPU only: .cpu() is unnecessary but harmless (no-op)
+                self.train_gen.update_adv(perm, self.adv_var.detach().numpy())
 
             # Update network params
             self.opt_1.zero_grad()
@@ -510,8 +517,9 @@ class Trainer(object):
                 metrics = [revenue.item(), rgt_mean.item(), irp_mean.item()]
                     
                 if self.config.test.save_output:
-                    alloc_np = alloc.detach().cpu().numpy()
-                    pay_np = pay.detach().cpu().numpy()
+                    # CPU only: .cpu() is unnecessary but harmless (no-op)
+                    alloc_np = alloc.detach().numpy()
+                    pay_np = pay.detach().numpy()
                     alloc_tst[perm, :, :] = alloc_np
                     pay_tst[perm, :] = pay_np
                         

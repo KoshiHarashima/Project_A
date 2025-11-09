@@ -127,6 +127,20 @@ elif setting == "additive_1x2_gamma_11":
     clip_op_lambda = (lambda x: clip_op_gamma_01(x))
     Trainer = trainer.Trainer
 
+elif setting == "additive_1x2_gamma_21":
+    cfg = additive_1x2_gamma_21_config.cfg
+    Net = additive_net.Net
+    Generator = gamma_21_generator.Generator
+    clip_op_lambda = (lambda x: clip_op_gamma_01(x))
+    Trainer = trainer.Trainer
+
+elif setting == "additive_1x2_gamma_31":
+    cfg = additive_1x2_gamma_31_config.cfg
+    Net = additive_net.Net
+    Generator = gamma_31_generator.Generator
+    clip_op_lambda = (lambda x: clip_op_gamma_01(x))
+    Trainer = trainer.Trainer
+
 elif setting == "additive_1x3_constrained":
     cfg = additive_1x3_constrained_config.cfg
     Net = constrained_additive_net.Net
