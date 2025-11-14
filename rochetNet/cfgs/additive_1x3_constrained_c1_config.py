@@ -103,7 +103,7 @@ __C.test.num_batches = 100
 # Test batch size
 __C.test.batch_size = 100
 # Save Ouput
-__C.test.save_output = False
+__C.test.save_output = True
 
 
 # Fixed Val params
