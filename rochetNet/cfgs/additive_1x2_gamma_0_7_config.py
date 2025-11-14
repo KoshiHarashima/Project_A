@@ -83,7 +83,7 @@ __C.test.seed = 100
 # Model to be evaluated
 __C.test.restore_iter = 400000
 # Test data
-__C.test.data = "online"
+__C.test.data = "fixed"
 # Number of test batches
 __C.test.num_batches = 100
 # Test batch size

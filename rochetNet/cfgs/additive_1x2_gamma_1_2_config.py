@@ -41,7 +41,7 @@ __C.train.seed = 42
 # training form restore_iter [needs saved model]
 __C.train.restore_iter = 0
 # max iters to train 
-__C.train.max_iter = 400000
+__C.train.max_iter = 1000000
 # Learning rate of network param updates
 __C.train.learning_rate = 1e-3
 # Regularization
@@ -81,9 +81,9 @@ __C.test = edict()
 # Test Seed
 __C.test.seed = 100
 # Model to be evaluated
-__C.test.restore_iter = 400000
+__C.test.restore_iter = 1000000
 # Test data
-__C.test.data = "online"
+__C.test.data = "fixed"
 # Number of test batches
 __C.test.num_batches = 100
 # Test batch size

@@ -105,6 +105,12 @@ elif setting == "additive_1x2_gamma_101":
     Generator = gamma_101_generator.Generator
     Trainer = trainer.Trainer
 
+elif setting == "additive_1x2_gamma_100_1":
+    cfg = additive_1x2_gamma_100_1_config.cfg
+    Net = additive_net.Net
+    Generator = gamma_100_1_generator.Generator
+    Trainer = trainer.Trainer
+
 elif setting == "additive_1x2_gamma_20_1":
     cfg = additive_1x2_gamma_20_1_config.cfg
     Net = additive_net.Net
@@ -183,6 +189,12 @@ elif setting == "additive_1x2_gamma_1_2":
     Generator = gamma_1_2_generator.Generator
     Trainer = trainer.Trainer
 
+elif setting == "additive_1x2_gamma_1_23_1":
+    cfg = additive_1x2_gamma_1_23_1_config.cfg
+    Net = additive_net.Net
+    Generator = gamma_1_23_1_generator.Generator
+    Trainer = trainer.Trainer
+
 elif setting == "additive_1x2_gamma_1_3":
     cfg = additive_1x2_gamma_1_3_config.cfg
     Net = additive_net.Net
@@ -193,6 +205,12 @@ elif setting == "additive_1x2_gamma_1_4":
     cfg = additive_1x2_gamma_1_4_config.cfg
     Net = additive_net.Net
     Generator = gamma_1_4_generator.Generator
+    Trainer = trainer.Trainer
+
+elif setting == "additive_1x2_gamma_1_25_1":
+    cfg = additive_1x2_gamma_1_25_1_config.cfg
+    Net = additive_net.Net
+    Generator = gamma_1_25_1_generator.Generator
     Trainer = trainer.Trainer
 
 elif setting == "additive_1x2_gamma_1_5":

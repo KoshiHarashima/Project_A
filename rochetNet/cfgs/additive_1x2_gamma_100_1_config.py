@@ -12,11 +12,11 @@ __C = edict()
 cfg = __C
 
 # Output-dir to write log-files and save model
-__C.dir_name = os.path.join("experiments", "additive_1x2_gamma_1_4")
+__C.dir_name = os.path.join("experiments", "additive_1x2_gamma_100_1")
 
 # Auction params
 __C.num_items = 2
-__C.distribution_type = "gamma_1_4"
+__C.distribution_type = "gamma_100_1"
 __C.agent_type = "additive"
 
 # Save data for restore.
